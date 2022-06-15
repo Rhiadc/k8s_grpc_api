@@ -1,3 +1,5 @@
+include .env
+
 .PHONY: build start unit-test start-dep stop-dep
 
 BIN=./bin/app
