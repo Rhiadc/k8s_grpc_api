@@ -1,28 +1,27 @@
-version: '3.2'
+version: '3.4'
 services:
-  mongo:
-    container_name: mongo
-    image: mongo:4.4.4
-    restart: always
+  api:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: rest_api
     ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: secret
-      MONGO_INITDB_DATABASE: testedb
-    volumes:
-      - .docker-data/mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-
-  mongo-express:
-    image: mongo-express:0.54
-    restart: always
+    - "8089:8089"
+    restart: on-failure
+    networks:
+      - grpcapi
+  
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: grpc_server
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
-    links:
-      - mongo
+    - "4040:4040"
+    restart: on-failure
+    networks:
+      - grpcapi
 
-volumes:
-  mongo-data:
+networks:
+  grpcapi:
+    driver: bridge
