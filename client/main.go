@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +14,9 @@ import (
 
 func main() {
 
-	conn, err := grpc.Dial("localhost:4040", grpc.WithInsecure())
+	service := os.Getenv("GRPC_CONN_HOST")
+	host := fmt.Sprintf("%s:4040", service)
+	conn, err := grpc.Dial(host, grpc.WithInsecure())
 
 	if err != nil {
 		panic(err)
@@ -38,7 +42,8 @@ func main() {
 		req := &proto.Request{A: int64(a), B: int64(b)}
 
 		if response, err := client.Add(ctx, req); err == nil {
-			ctx.JSON(http.StatusOK, gin.H{"result": string(response.Result)})
+
+			ctx.JSON(http.StatusOK, gin.H{"result": response.Result})
 		} else {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		}
@@ -61,15 +66,14 @@ func main() {
 		req := &proto.Request{A: int64(a), B: int64(b)}
 
 		if response, err := client.Multiply(ctx, req); err == nil {
-			ctx.JSON(http.StatusOK, gin.H{"result": strconv.FormatInt(response.Result, 10)})
+			ctx.JSON(http.StatusOK, gin.H{"result": response.Result})
 		} else {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		}
 
 	})
 
-	if err := g.Run(":8080"); err != nil {
+	if err := g.Run(":8089"); err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
-	//some comment
 }

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restapi
+spec:
+  selector:
+    matchLabels:
+      app: restapi
+  template:
+    metadata:
+      labels:
+        app: restapi
+    spec:
+      containers:
+        - name: restapi
+          image: rhiadciccoli/clientapi:latest
+          ports:
+            - containerPort: 8089
+          env:
+            - name: GRPC_CONN_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: grpcapi-configmap
+                  key: grpc_conn_host
+---
+apiVersion:  v1
+kind: Service
+metadata: 
+  name: restapi-service
+spec:
+  selector:
+    app: restapi
+  ports:
+  - protocol: TCP
+    port: 8089
+    targetPort: 8089    

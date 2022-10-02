@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net"
 
 	"github.com/rhiadc/grpc_api/server/proto"
@@ -15,7 +16,9 @@ type server struct {
 
 func main() {
 	listener, err := net.Listen("tcp", ":4040")
+	fmt.Println("GRPC server listening on port 4040...")
 	if err != nil {
+		fmt.Println("Error", err.Error())
 		panic(err)
 	}
 
@@ -24,8 +27,11 @@ func main() {
 	reflection.Register(srv)
 
 	if err := srv.Serve(listener); err != nil {
+		fmt.Println("Error", err.Error())
 		panic(err)
 	}
+
+	fmt.Println("GRPC server listening on port 4040")
 }
 
 func (s *server) Add(ctx context.Context, request *proto.Request) (*proto.Response, error) {
