@@ -40,7 +40,7 @@ func main() {
 	exp, err := lotel.NewExporter(ctx)
 
 	if err != nil {
-		log.Fatalf("failed to initialize exporter: %v", err)
+		log.Fatalf("Error: failed to initialize exporter: %v", err)
 	}
 
 	tp := lotel.NewTraceProvider(exp)
