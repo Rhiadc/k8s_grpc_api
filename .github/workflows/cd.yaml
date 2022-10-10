@@ -44,7 +44,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
           cd k8s
-          kustomize edit set image tag=$DOCKER_USERNAME/clientapi:$GITHUB_SHA
+          kustomize edit set image clientapi=$DOCKER_USERNAME/clientapi:$GITHUB_SHA
       
       - 
         name: Commit

@@ -8,6 +8,4 @@ images:
 - name: clientapi
   newName: rhiadciccoli/clientapi
   newTag: clientapi
-- name: tag
-  newName: rhiadciccoli/clientapi
-  newTag: 20ae0759c0688fa885af9abb137598df38afd88d
+
