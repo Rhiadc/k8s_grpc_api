@@ -32,3 +32,30 @@ jobs:
           push: true
           tags: rhiadciccoli/clientapi:${{ github.sha }}
       
+      -
+        name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+      
+      -
+        name: Update kubernetes resources
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          cd k8s
+          kustomize edit set image tag=$DOCKER_USERNAME/clientapi:$GITHUB_SHA
+      
+      - 
+        name: Commit
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Bump docker version"
+
+      -
+        name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.TOKEN_GITHUB }}
+          repository: Rhiadc/k8s_grpc_api
