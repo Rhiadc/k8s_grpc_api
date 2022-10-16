@@ -7,5 +7,4 @@ resources:
 images:
 - name: clientapi
   newName: rhiadciccoli/clientapi
-  newTag: clientapi
-
+  newTag: 908f6ec72df939ebad7f0d8227e73af2669c4daf
