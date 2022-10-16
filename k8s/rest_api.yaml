@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grpcapi-configmap
+data:
+  grpc_conn_host: grpcapi-service
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
