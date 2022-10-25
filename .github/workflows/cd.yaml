@@ -32,6 +32,7 @@ jobs:
         run : |
           git checkout -b chore/bump-docker-version
           cd helmapi 
+          echo test >> values.yaml
           sed 's/^\(tag: \).*$/\1'"new_tag"'/' values.yaml
           cat values.yaml
           cd ..
