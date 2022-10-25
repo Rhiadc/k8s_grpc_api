@@ -31,10 +31,9 @@ jobs:
       - name: add file
         run : |
           git checkout -b chore/bump-docker-version
-          cd helmapi && ls
-          grep -n 'tag' /helmapi/values.yaml | cut -d ':' -f1
-          grep -n 'tag' /helmapi/values.yaml | cut -d ':' -f1
-          sed -i '6s/.*/    tag: \'new_tag\'/' /helmapi/values.yaml
+          cd helmapi 
+          grep -n 'tag' values.yaml | cut -d ':' -f1
+          sed -i '6s/.*/    tag: \'new_tag\'/' values.yaml
           git add .
           git commit -m "bump docker version"
           git push -u origin chore/bump-docker-version
