@@ -39,7 +39,7 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{secrets.TOKEN_GITHUB }}
         with:
           destination-github-username: 'Rhiadc'
           destination-repository-name: 'gitops-testapi'
