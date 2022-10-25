@@ -32,8 +32,7 @@ jobs:
         run : |
           git checkout -b chore/bump-docker-version
           cd helmapi 
-          grep -n 'tag' values.yaml | cut -d ':' -f1
-          sed -i '6s/.*/    tag: \'new_tag\'/' values.yaml
+          sed 's/^\(tag: \).*$/\1'"new_tag"'/' values.yaml
           git add .
           git commit -m "bump docker version"
           git push -u origin chore/bump-docker-version
