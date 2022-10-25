@@ -34,15 +34,6 @@ jobs:
           git checkout -b chore/bump-docker-version
           git add .
           git commit -m "bump docker version"
+          git push -u origin chore/bump-docker-version
 
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{secrets.TOKEN_GITHUB }}
-        with:
-          destination-github-username: 'Rhiadc'
-          destination-repository-name: 'gitops-testapi'
-          user-email: rhiad.ciccoli@pina.cat
-          commit-message: test
-          target-branch: main
+      
