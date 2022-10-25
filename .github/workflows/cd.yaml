@@ -31,7 +31,7 @@ jobs:
       - name: add file
         run : |
           git checkout -b chore/bump-docker-version
-          ls
+          cd helmapi && ls
           grep -n 'tag' /helmapi/values.yaml | cut -d ':' -f1
           grep -n 'tag' /helmapi/values.yaml | cut -d ':' -f1
           sed -i '6s/.*/    tag: \'new_tag\'/' /helmapi/values.yaml
