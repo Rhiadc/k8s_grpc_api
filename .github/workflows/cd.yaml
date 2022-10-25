@@ -30,8 +30,9 @@ jobs:
  #         git commit -am "Bump docker version"
       - name: add file
         run : |
-          echo a > value
           git checkout -b chore/bump-docker-version
+          grep -n 'tag' /helmapi/values.yaml | cut -d ':' -f1
+          sed -i '6s/.*/    tag: \'new_tag\'/' /helmapi/values.yaml
           git add .
           git commit -m "bump docker version"
           git push -u origin chore/bump-docker-version
